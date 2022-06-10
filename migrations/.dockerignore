@@ -1,0 +1,9 @@
+**/*.env
+*.yaml
+node_modules
+coverage
+Makefile
+Dockerfile
+README.md
+src/__tests__
+setupTests.js

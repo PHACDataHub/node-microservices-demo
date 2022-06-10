@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS bugs (
+	id SERIAL PRIMARY KEY,
+	title TEXT NOT NULL,
+	description TEXT NOT NULL,
+	status TEXT,
+	url TEXT,
+	foundon DATE NOT NULL DEFAULT CURRENT_DATE
+);
+
