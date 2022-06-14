@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: api
+  name: api
+  namespace: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      initContainers:
+      - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/migrations:latest
+        name: migrations
+        env:
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: migrations
+              key: DB_URL
+        resources: {}
+      containers:
+      - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/api:latest
+        name: api
+        env:
+        - name: DB_USER
+          value: bugbounty
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: api
+              key: DB_PASS
+        - name: DB_NAME
+          value: bugbounty
+        - name: DB_HOST
+          value: postgres.database
+        - name: DB_PORT
+          value: "5432"
+        resources: {}
+status: {}

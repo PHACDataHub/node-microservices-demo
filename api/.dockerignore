@@ -1,7 +1,9 @@
 **/*.env
 *.yaml
 node_modules
+k8s
 coverage
+.*rc
 Dockerfile
 README.md
 src/__tests__
