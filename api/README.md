@@ -17,14 +17,14 @@ $ docker run -d --network host -e POSTGRES_USER=bugbounty -e POSTGRES_PASSWORD=t
 $ npm start &
 $ curl -s -H "Content-Type: application/json" -d '{"query":"{bugs {id title}}"}' localhost:3000 | jq .
 {
-	"data": {
-		"bugs": [
-  		{
+  "data": {
+    "bugs": [
+      {
         "id": "1",
         "title": "Reflective XSS found on customer support page"
-  		}
-		]
-	}
+      }
+    ]
+  }
 }
 ```
 
