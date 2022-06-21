@@ -14,4 +14,4 @@ COPY ./.env.example .
 
 USER node
 
-CMD ["npm", "--no-update-notifier", "start"]
+CMD npm --no-update-notifier start

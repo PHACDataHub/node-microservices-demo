@@ -2,6 +2,20 @@
 demo:
 		kustomize build . | kubectl apply -f -
 
+# This regenerates the istio manifests while using yq to remove the CRD for the
+# operator so it doesn't clash with the istio operator which also includes the
+# CRD
+.PHONY: update-istio
+update-istio:
+		istioctl manifest generate --dry-run | yq 'select(.metadata.name != "istiooperators.install.istio.io" or .kind != "CustomResourceDefinition") | select (.!=null)' > ingress/istio-manifests.yaml
+
+# This regenerates the istio operator manifests, which include the IstioOperator
+# CRD that we omitted above
+.PHONY: update-istio-operator
+update-istio-operator:
+		istioctl operator dump --dry-run > ingress/istio-operator.yaml
+
+
 .ONESHELL:
 .PHONY: credentials
 credentials:

@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: api-virtual-service
+  namespace: api
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - istio-system/publicgateway
+  http:
+  - name: gateway-to-api
+    match:
+    - uri:
+        prefix: /graphql
+    route:
+    - destination:
+        host: api.api.svc.cluster.local
