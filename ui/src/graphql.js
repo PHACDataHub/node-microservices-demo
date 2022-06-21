@@ -5,6 +5,7 @@ export const GET_BUGS = gql`
     bugs {
       id
       title
+			description
     }
   }
 `
