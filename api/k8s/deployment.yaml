@@ -43,5 +43,11 @@ spec:
           value: postgres.database
         - name: DB_PORT
           value: "5432"
-        resources: {}
+        resources:
+          limits:
+            cpu: 300m
+            memory: 70Mi
+          requests:
+            cpu: 300m
+            memory: 70Mi
 status: {}

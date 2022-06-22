@@ -19,5 +19,12 @@ spec:
       containers:
       - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/ui
         name: ui
-        resources: {}
+        resources:
+          limits:
+            cpu: 200m
+            memory: 45Mi
+          requests:
+            cpu: 200m
+            memory: 45Mi
+
 status: {}
