@@ -27,5 +27,22 @@ spec:
             secretKeyRef:
               name: database
               key: POSTGRES_PASSWORD
-        resources: {}
+        - name: API_USER
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: API_USER
+        - name: API_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: API_PASSWORD
+        volumeMounts:
+        - name: initdb
+          mountPath: /docker-entrypoint-initdb.d/init-user-db.sh
+          subPath: init-user-db.sh
+      volumes:
+        - name: initdb
+          configMap:
+            name: initdb
 status: {}

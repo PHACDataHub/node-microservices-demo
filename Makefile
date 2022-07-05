@@ -15,7 +15,6 @@ update-istio:
 update-istio-operator:
 		istioctl operator dump --dry-run > ingress/istio-operator.yaml
 
-
 .ONESHELL:
 .PHONY: credentials
 credentials:
@@ -24,7 +23,9 @@ credentials:
 		EOF
 		@cat <<-'EOF' > database.env
 		POSTGRES_USER=bugbounty
-		POSTGRES_PASSWORD=test
+		POSTGRES_PASSWORD=secret
+		API_USER=leastprivilegeuser
+		API_PASSWORD=test
 		EOF
 		@cat <<-'EOF' > api.env
 		DB_PASS=test

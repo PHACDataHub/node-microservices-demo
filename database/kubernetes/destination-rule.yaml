@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: api-database
+  namespace: api
+spec:
+  host: postgres.database.svc.cluster.local
+  trafficPolicy:
+    portLevelSettings:
+    - port:
+        number: 5432
+      tls:
+        mode: ISTIO_MUTUAL
+
