@@ -5,4 +5,6 @@ metadata:
   namespace: istio-system
 spec:
   mtls:
-    mode: STRICT
+    # mTLS in STRICT mode block additional init containers
+    # https://github.com/istio/istio/issues/32039
+    mode: PERMISSIVE
