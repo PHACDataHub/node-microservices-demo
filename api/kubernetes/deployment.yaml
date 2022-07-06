@@ -46,6 +46,11 @@ spec:
           value: postgres.database
         - name: DB_PORT
           value: "5432"
+        # Container specific security settings:
+        securityContext:
+          # No new privs for process or it's children
+          # https://github.com/kubernetes/design-proposals-archive/blob/main/auth/no-new-privs.md
+          allowPrivilegeEscalation: false
         resources:
           limits:
             cpu: 300m

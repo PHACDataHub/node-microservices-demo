@@ -16,6 +16,15 @@ spec:
       labels:
         app: postgres
     spec:
+      # Pod wide security settings:
+			# TODO: See the section on running Postgres as an
+      # arbitrary user in the docs for the official image:
+      # https://hub.docker.com/_/postgres
+      # securityContext:
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
+      #   fsGroup: 1000
+      #   runAsNonRoot: true
       containers:
       - image: postgres
         name: postgres
@@ -37,6 +46,11 @@ spec:
             secretKeyRef:
               name: database
               key: API_PASSWORD
+        # Container specific security settings:
+        securityContext:
+          # No new privs for process or it's children
+          # https://github.com/kubernetes/design-proposals-archive/blob/main/auth/no-new-privs.md
+          allowPrivilegeEscalation: false
         volumeMounts:
         - name: initdb
           mountPath: /docker-entrypoint-initdb.d/init-user-db.sh

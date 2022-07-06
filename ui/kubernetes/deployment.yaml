@@ -16,9 +16,24 @@ spec:
       labels:
         app: ui
     spec:
+      # Pod wide security settings:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        # seems to succeed only when specific uid/guid is set
+        runAsNonRoot: true
       containers:
       - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/ui
         name: ui
+        # Container specific security settings:
+        securityContext:
+          # No new privs for process or it's children
+          # https://github.com/kubernetes/design-proposals-archive/blob/main/auth/no-new-privs.md
+          allowPrivilegeEscalation: false
+          # TODO: npm checks for updates and writes a file
+          # Explore disabling check or removing npm
+          # readOnlyRootFilesystem: true
         resources:
           limits:
             cpu: 200m
