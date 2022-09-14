@@ -19,7 +19,7 @@ update-istio-operator:
 .PHONY: credentials
 credentials:
 		@cat <<-'EOF' > migrations.env
-		DB_URL=postgres://bugbounty:test@postgres.database:5432/bugbounty?sslmode=disable
+		DB_URL=postgres://bugbounty:secret@postgres.database:5432/bugbounty?sslmode=disable
 		EOF
 		@cat <<-'EOF' > database.env
 		POSTGRES_USER=bugbounty
@@ -28,5 +28,6 @@ credentials:
 		API_PASSWORD=test
 		EOF
 		@cat <<-'EOF' > api.env
+		DB_USER=leastprivilegeuser
 		DB_PASS=test
 		EOF
