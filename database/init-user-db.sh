@@ -5,7 +5,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_USER" <<
 DO \$\$
 BEGIN
 	 IF EXISTS (
-      SELECT FROM pg_catalog.pg_roles
+      SELECT * FROM pg_catalog.pg_roles
       WHERE  rolname = '$API_USER'
 ) THEN
   RAISE NOTICE 'Role "$API_USER" already exists. Skipping.';
