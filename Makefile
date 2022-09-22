@@ -7,7 +7,7 @@ demo:
 # CRD
 .PHONY: update-istio
 update-istio:
-		istioctl manifest generate --dry-run | yq 'select(.metadata.name != "istiooperators.install.istio.io" or .kind != "CustomResourceDefinition") | select (.!=null)' > ingress/istio-manifests.yaml
+		istioctl manifest generate --dry-run | yq -y 'select(.metadata.name != "istiooperators.install.istio.io" or .kind != "CustomResourceDefinition") | select (.!=null)' > ingress/istio.yaml
 
 # This regenerates the istio operator manifests, which include the IstioOperator
 # CRD that we omitted above
