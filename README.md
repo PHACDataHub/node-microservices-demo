@@ -43,7 +43,7 @@ See the [API documentation](api/README.md) for more details.
 
 ## The Migrations service
 
-This lives in the migrations folder and exists to move the database schema from one known state to the next.
+This lives in the migrations folder and exists to move the database schema from one known state to the next. The requirement to "[support zero-downtime deployments](https://www.canada.ca/en/government/system/digital-government/policies-standards/government-canada-enterprise-architecture-framework.html#:~:text=support%20zero%E2%80%91downtime%20deployments)" means teams will need to look carefully at how to do this with their choosen database and web framework (and possibly choose ones that make this easy to do).
 
 The powerful permissions needed to alter a database schema (ie create/drop tables) are required only once at startup, and it's the job of the migration service to create/verify the schema needed and then exit.
 This design leverages the plumbing provided by modern container orchestrators like [ECS](https://twitter.com/nathankpeck/status/1104069162949849092) or [Kubernetes](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#understanding-init-containers) to achieve "least privilege".
