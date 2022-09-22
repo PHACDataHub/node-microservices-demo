@@ -23,9 +23,9 @@ What's missing to help departments adapt to this "major shift" are working examp
 
 A distributed system is made of many small (micro even!) parts (services) that collaborate to deliver some funtionality, deployed across a series of machines. The basic idea behind this demo is to show how this way of building and deploying applications allows for more granular security decisions and higher levels of observability, as can been seen when we visualize traffic flowing through these services with [Kiali](https://kiali.io/).
 
-![kiali-microservices](https://user-images.githubusercontent.com/109692/181612922-b78595e5-bdda-42cd-a37a-e109e594b050.gif)
+![microservices-kiali](https://user-images.githubusercontent.com/109692/191849626-bd14c426-d536-4fbc-8bb0-fad20d5f2d5e.gif)
 
-Visualizations like the above are a powerful way to make security visible: you can see that the system has distinct components (with their own security settings), and communications between them is encrypted with mTLS (wondering [about the missing lock?](https://github.com/kiali/kiali/issues/5240)). 
+Visualizations like the above are a powerful way to make security visible: you can see that the system has distinct components (with their own security settings), and communications between them is encrypted with mTLS. 
 
 This is a zero trust microcosm, and systems built like this have [security properties](https://www.youtube.com/watch?v=_omGtDfaAjI) and [compliance implications](https://www.youtube.com/watch?v=WgSMaiCaBpw&t=2162s) that security teams need to be learning about.
 
