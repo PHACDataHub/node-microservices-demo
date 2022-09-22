@@ -10,8 +10,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 ...
@@ -27,8 +27,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 data:
@@ -56,7 +56,7 @@ data:
       image_name: quay.io/kiali/kiali
       image_pull_policy: Always
       image_pull_secrets: []
-      image_version: v1.53
+      image_version: v1.56.1
       ingress:
         additional_labels: {}
         class_name: nginx
@@ -86,7 +86,7 @@ data:
       service_annotations: {}
       service_type: ""
       tolerations: []
-      version_label: v1.53.0
+      version_label: v1.56.1
       view_only_mode: false
     external_services:
       custom_dashboards:
@@ -128,8 +128,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 rules:
@@ -218,8 +218,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 rules:
@@ -315,8 +315,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 roleRef:
@@ -340,8 +340,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 rules:
@@ -373,8 +373,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
 roleRef:
@@ -398,8 +398,8 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
-    app.kubernetes.io/version: "v1.53.0"
+    version: "v1.56.1"
+    app.kubernetes.io/version: "v1.56.1"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
   annotations:
@@ -427,7 +427,7 @@ metadata:
     app: kiali
     app.kubernetes.io/name: kiali
     app.kubernetes.io/instance: kiali
-    version: "v1.53.0"
+    version: "v1.56.1"
     app.kubernetes.io/version: "v1.52.0"
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: "kiali"
@@ -450,7 +450,7 @@ spec:
         app: kiali
         app.kubernetes.io/name: kiali
         app.kubernetes.io/instance: kiali
-        version: "v1.53.0"
+        version: "v1.56.1"
         app.kubernetes.io/version: "v1.52.0"
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: "kiali"
@@ -463,7 +463,7 @@ spec:
     spec:
       serviceAccountName: kiali
       containers:
-      - image: "quay.io/kiali/kiali:v1.53"
+      - image: "quay.io/kiali/kiali:v1.56.1"
         imagePullPolicy: Always
         name: kiali
         command:
