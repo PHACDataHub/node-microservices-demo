@@ -60,8 +60,16 @@ See the [UI documentation](ui/README.md) for more details.
 
 Distributed architectures require an [orchestrator](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/scalable-available-multi-container-microservice-applications), and Kubernetes is a vendor neutral open source stadard. You can run a local version of it using [Minikube](https://minikube.sigs.k8s.io/docs/). Minikube requires a lot of resources... so throw everything you can at it.
 
+You'll also need [Kustomize](https://kustomize.io/) and [istioctl](https://istio.io/latest/docs/setup/getting-started/#download) installed.
 ```bash
 minikube start --cpus 8 --memory 20480
 make credentials
-make demo
+# get Istio running first:
+kustomize build ingress | kubectl apply -f -
+# Make sure istio is running with `watch kubectl get po -n istio-system`
+# When istiod and istio-ingressgateway are running it's time for the rest of the config:
+kustomize build | kubectl apply -f -
 ```
+
+Why the "get istio running first" dance? Istio works its magic by grabbing control of a services network devices. If other services start before istio, it can't do that!
+
