@@ -1,5 +1,5 @@
 FROM migrate/migrate:v4.15.2 AS migrate
-FROM alpine:3.14.4
+FROM alpine:3.16.2
 
 RUN addgroup -S migrate && adduser -H -S migrate -G migrate
 
