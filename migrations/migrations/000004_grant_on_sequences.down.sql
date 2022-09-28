@@ -1,0 +1,1 @@
+REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM leastprivilegeuser; 
