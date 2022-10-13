@@ -14,11 +14,12 @@
   "author": "Mike Williamson",
   "license": "MIT",
   "dependencies": {
+    "@graphql-tools/schema": "^9.0.4",
+    "@graphql-yoga/node": "^2.13.13",
+    "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
-    "express": "^4.18.0",
-    "express-graphql": "https://gitpkg.now.sh/GeorgesTech/express-graphql/npmDist?chore/graphql-16",
-    "graphql": "^16.4.0",
-    "graphql-query-complexity": "^0.11.0",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
     "graphql-scalars": "^1.17.0",
     "postgres": "^3.1.0"
   },
@@ -37,7 +38,7 @@
     "eslint-plugin-standard": "^4.1.0",
     "jest": "^27.0.6",
     "prettier": "^2.6.2",
-    "supertest": "^6.2.3"
+    "supertest": "^6.3.0"
   },
   "jest": {
     "verbose": true,
