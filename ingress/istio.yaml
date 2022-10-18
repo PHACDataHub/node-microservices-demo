@@ -8006,7 +8006,7 @@ data:
     \ },\n        \"requests\": {\n          \"cpu\": \"10m\",\n          \"memory\"\
     : \"10Mi\"\n        }\n      }\n    },\n    \"remotePilotAddress\": \"\",\n  \
     \  \"sds\": {\n      \"token\": {\n        \"aud\": \"istio-ca\"\n      }\n  \
-    \  },\n    \"sts\": {\n      \"servicePort\": 0\n    },\n    \"tag\": \"1.15.0\"\
+    \  },\n    \"sts\": {\n      \"servicePort\": 0\n    },\n    \"tag\": \"1.15.2\"\
     ,\n    \"tracer\": {\n      \"datadog\": {\n        \"address\": \"$(HOST_IP):8126\"\
     \n      },\n      \"lightstep\": {\n        \"accessToken\": \"\",\n        \"\
     address\": \"\"\n      },\n      \"stackdriver\": {\n        \"debug\": false,\n\
@@ -8837,7 +8837,7 @@ spec:
       serviceAccountName: istio-ingressgateway-service-account
       containers:
         - name: istio-proxy
-          image: docker.io/istio/proxyv2:1.15.0
+          image: docker.io/istio/proxyv2:1.15.2
           ports:
             - containerPort: 15021
               protocol: TCP
@@ -9040,7 +9040,7 @@ spec:
         fsGroup: 1337
       containers:
         - name: discovery
-          image: docker.io/istio/pilot:1.15.0
+          image: docker.io/istio/pilot:1.15.2
           args:
             - discovery
             - --monitoringAddr=:15014
