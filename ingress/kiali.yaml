@@ -56,7 +56,7 @@ data:
       image_name: quay.io/kiali/kiali
       image_pull_policy: Always
       image_pull_secrets: []
-      image_version: v1.56.1
+      image_version: v1.58.0
       ingress:
         additional_labels: {}
         class_name: nginx
@@ -463,7 +463,7 @@ spec:
     spec:
       serviceAccountName: kiali
       containers:
-      - image: "quay.io/kiali/kiali:v1.56.1"
+      - image: "quay.io/kiali/kiali:v1.58.0"
         imagePullPolicy: Always
         name: kiali
         command:
