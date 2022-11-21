@@ -62,7 +62,7 @@ Distributed architectures require an [orchestrator](https://docs.microsoft.com/e
 
 You'll also need [Kustomize](https://kustomize.io/) and [istioctl](https://istio.io/latest/docs/setup/getting-started/#download) installed.
 ```bash
-minikube start --cpus 8 --memory 20480 --kubernetes-version=1.24.0
+minikube start --cpus 8 --memory 2048 --kubernetes-version=1.24.0
 make credentials
 # get Istio running first:
 kustomize build ingress | kubectl apply -f -
