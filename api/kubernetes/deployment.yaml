@@ -27,7 +27,7 @@ spec:
               key: DB_URL
         resources: {}
       containers:
-      - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/api:latest
+      - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/api:main-32ce344-1670374758
         name: api
         env:
         - name: DB_USER
