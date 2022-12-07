@@ -1,5 +1,5 @@
-import express from 'express'
-import { createServer } from '@graphql-yoga/node'
+import { createServer } from 'node:http'
+import { createYoga } from 'graphql-yoga'
 
 export function Server({
   schema,
@@ -7,14 +7,8 @@ export function Server({
     log: (...args) => console.log(args),
   },
 }) {
-  const app = express()
+  const yoga = createYoga({ schema, context, graphqlEndpoint: '/' })
+  const server = createServer(yoga)
 
-  const graphQLServer = createServer({
-    schema,
-    context,
-  })
-
-  app.use('/', graphQLServer)
-
-  return app
+  return server
 }
