@@ -52,10 +52,7 @@ spec:
           # https://github.com/kubernetes/design-proposals-archive/blob/main/auth/no-new-privs.md
           allowPrivilegeEscalation: false
         resources:
-          limits:
-            cpu: 300m
-            memory: 70Mi
           requests:
             cpu: 300m
-            memory: 70Mi
+            memory: 150Mi
 status: {}
