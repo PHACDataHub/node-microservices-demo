@@ -35,11 +35,7 @@ spec:
           # Explore disabling check or removing npm
           # readOnlyRootFilesystem: true
         resources:
-          limits:
-            cpu: 200m
-            memory: 45Mi
           requests:
-            cpu: 200m
-            memory: 45Mi
-
+            cpu: 300m
+            memory: 150Mi
 status: {}
