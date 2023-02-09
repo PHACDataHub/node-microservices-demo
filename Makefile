@@ -1,5 +1,14 @@
+.PHONY: secrets
+secrets:
+		kubectl create namespace ui
+		kubectl create namespace api
+		kubectl create namespace database
+		kubectl create secret generic api -n api --from-env-file api.env
+		kubectl create secret generic migrations -n api --from-env-file migrations.env
+		kubectl create secret generic database -n database --from-env-file database.env
+
 .PHONY: demo
-demo:
+demo: secrets
 		kustomize build . | kubectl apply -f -
 
 # This regenerates the istio manifests while using yq to remove the CRD for the
