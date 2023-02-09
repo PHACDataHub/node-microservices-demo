@@ -24,7 +24,7 @@ spec:
         # seems to succeed only when specific uid/guid is set
         runAsNonRoot: true
       containers:
-        - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/ui:main-516cec6-1670455166
+      - image: northamerica-northeast1-docker.pkg.dev/node-microservices-demo/microservices-demo/ui:main-516cec6-1670455166
         name: ui
         # Container specific security settings:
         securityContext:
