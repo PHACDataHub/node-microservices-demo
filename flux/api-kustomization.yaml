@@ -1,0 +1,25 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: api
+  namespace: flux-system
+spec:
+  healthChecks:
+  - kind: Deployment
+    name: istio-ingressgateway
+    namespace: istio-system
+  - kind: Deployment
+    name: istiod
+    namespace: istio-system
+  - kind: Deployment
+    name: postgres
+    namespace: database
+  interval: 1m0s
+  path: ./api
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: github-repo
+  timeout: 2m0s
+
