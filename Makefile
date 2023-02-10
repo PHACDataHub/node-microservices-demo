@@ -9,7 +9,7 @@ secrets:
 
 .PHONY: demo
 demo: secrets
-		kustomize build . | kubectl apply -f -
+		kustomize build flux | kubectl apply -f -
 
 # This regenerates the istio manifests while using yq to remove the CRD for the
 # operator so it doesn't clash with the istio operator which also includes the
