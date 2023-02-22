@@ -1,0 +1,61 @@
+version: "3.8"
+name: node-microservices-demo
+services:
+  postgres:
+    image: postgres:alpine
+    env_file: ./server/postgres.env
+    ports:
+      - 5432
+    expose:
+      - 5432
+  # migrations:
+  #   build: ./server
+  #   working_dir: /server
+  #   env_file: ./server/server.env
+  #   # restart: on-failure
+  #   volumes:
+  #   - type: bind
+  #     source: ./server
+  #     target: /server
+  #   command: python manage.py migrate
+  #   depends_on:
+  #     - postgres
+  api:
+    build: ./server
+    working_dir: /server
+    env_file: ./server/server.env
+    env:
+      DEBUG:True
+      ALLOWED_HOSTS=localhost,127.0.0.1
+      DB_NAME=cpho_dev
+      DB_USER=cpho_user-admin
+      DB_PASSWORD=123
+      DB_HOST=postgres
+      DB_PORT=54
+    # restart: on-failure
+    ports:
+      - 8000
+    expose:
+      - 8000
+    volumes:
+    - type: bind
+      source: ./server
+      target: /server
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - migrations
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000
+    expose:
+      - 3000
+    command: npm start
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /frontend
+    depends_on:
+      - server
+volumes:
+  driver: {}
