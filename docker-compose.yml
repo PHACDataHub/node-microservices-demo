@@ -1,13 +1,13 @@
 version: "3.8"
 name: node-microservices-demo
 services:
-  postgres:
+  database:
     image: postgres:alpine
-    env_file: ./server/postgres.env
+    env_file: ./database/postgres.env
     ports:
-      - 5432
-    expose:
-      - 5432
+      - 5432:5432
+    # expose:
+    #   - 5432
   # migrations:
   #   build: ./server
   #   working_dir: /server
@@ -21,31 +21,30 @@ services:
   #   depends_on:
   #     - postgres
   api:
-    build: ./server
+    build: ./api
     working_dir: /server
-    env_file: ./server/server.env
-    env:
-      DEBUG:True
-      ALLOWED_HOSTS=localhost,127.0.0.1
-      DB_NAME=cpho_dev
-      DB_USER=cpho_user-admin
-      DB_PASSWORD=123
-      DB_HOST=postgres
-      DB_PORT=54
+    env_file: ./api/server.env
+    # env: DEBUG:True
+    #   ALLOWED_HOSTS=localhost,127.0.0.1
+    #   DB_NAME=cpho_dev
+    #   DB_USER=cpho_user-admin
+    #   DB_PASSWORD=123
+    #   DB_HOST=postgres
+    #   DB_PORT=54
     # restart: on-failure
     ports:
-      - 8000
+      - 3000
     expose:
-      - 8000
-    volumes:
-    - type: bind
-      source: ./server
-      target: /server
-    command: python manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - migrations
-  frontend:
-    build: ./frontend
+      - 3000
+    # volumes:
+    #   - type: bind
+    #     source: ./server
+    #     target: /server
+    # command: python manage.py runserver 0.0.0.0:8000
+    # depends_on:
+    #   - migrations
+  ui:
+    build: ./ui
     ports:
       - 3000
     expose:
@@ -56,6 +55,6 @@ services:
         source: ./frontend
         target: /frontend
     depends_on:
-      - server
+      - database
 volumes:
   driver: {}
