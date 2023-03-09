@@ -7,7 +7,7 @@ export function Server({
     log: (...args) => console.log(args),
   },
 }) {
-  const yoga = createYoga({ schema, context, graphqlEndpoint: '/' })
+  const yoga = createYoga({ schema, context, graphqlEndpoint: '/graphql' })
   const server = createServer(yoga)
 
   return server

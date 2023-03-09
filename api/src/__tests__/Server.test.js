@@ -26,7 +26,7 @@ describe('Server', () => {
       const server = await Server({ schema })
 
       const response = await request(server)
-        .post('/')
+        .post('/graphql')
         .set('Accept', 'application/json')
         .send({
           query: '{hello}',
