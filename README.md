@@ -76,3 +76,13 @@ minikube start
 make credentials
 make demo
 ```
+
+Then launch the Kiali dashboard:
+```bash
+istioctl dashboard kiali
+```
+
+Refresh the application several times to see traffic flow on the dashboard. The url can be found with:
+```bash
+minikube service istio-ingressgateway -n istio-system --url
+```
