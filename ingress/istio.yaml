@@ -22,6 +22,189 @@ spec:
     singular: authorizationpolicy
   scope: Namespaced
   versions:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          properties:
+            spec:
+              description: 'Configuration for access control on workloads. See more
+                details at: https://istio.io/docs/reference/config/security/authorization-policy.html'
+              oneOf:
+                - not:
+                    anyOf:
+                      - required:
+                          - provider
+                - required:
+                    - provider
+              properties:
+                action:
+                  description: Optional.
+                  enum:
+                    - ALLOW
+                    - DENY
+                    - AUDIT
+                    - CUSTOM
+                  type: string
+                provider:
+                  description: Specifies detailed configuration of the CUSTOM action.
+                  properties:
+                    name:
+                      description: Specifies the name of the extension provider.
+                      type: string
+                  type: object
+                rules:
+                  description: Optional.
+                  items:
+                    properties:
+                      from:
+                        description: Optional.
+                        items:
+                          properties:
+                            source:
+                              description: Source specifies the source of a request.
+                              properties:
+                                ipBlocks:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                namespaces:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notIpBlocks:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notNamespaces:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notPrincipals:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notRemoteIpBlocks:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notRequestPrincipals:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                principals:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                remoteIpBlocks:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                requestPrincipals:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
+                        type: array
+                      to:
+                        description: Optional.
+                        items:
+                          properties:
+                            operation:
+                              description: Operation specifies the operation of a
+                                request.
+                              properties:
+                                hosts:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                methods:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notHosts:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notMethods:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notPaths:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                notPorts:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                paths:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                                ports:
+                                  description: Optional.
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
+                        type: array
+                      when:
+                        description: Optional.
+                        items:
+                          properties:
+                            key:
+                              description: The name of an Istio attribute.
+                              type: string
+                            notValues:
+                              description: Optional.
+                              items:
+                                type: string
+                              type: array
+                            values:
+                              description: Optional.
+                              items:
+                                type: string
+                              type: array
+                          type: object
+                        type: array
+                    type: object
+                  type: array
+                selector:
+                  description: Optional.
+                  properties:
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+              type: object
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+          type: object
+      served: true
+      storage: false
+      subresources:
+        status: {}
     - name: v1beta1
       schema:
         openAPIV3Schema:
@@ -3114,6 +3297,7 @@ spec:
                           - CLUSTER
                           - EXTENSION_CONFIG
                           - BOOTSTRAP
+                          - LISTENER_FILTER
                         type: string
                       match:
                         description: Match on listener/route configuration/cluster.
@@ -3200,6 +3384,9 @@ spec:
                                       context.
                                     type: string
                                 type: object
+                              listenerFilter:
+                                description: Match a specific listener filter.
+                                type: string
                               name:
                                 description: Match a specific listener by its name.
                                 type: string
@@ -3747,6 +3934,91 @@ spec:
     singular: requestauthentication
   scope: Namespaced
   versions:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          properties:
+            spec:
+              description: RequestAuthentication defines what request authentication
+                methods are supported by a workload.
+              properties:
+                jwtRules:
+                  description: Define the list of JWTs that can be validated at the
+                    selected workloads' proxy.
+                  items:
+                    properties:
+                      audiences:
+                        items:
+                          type: string
+                        type: array
+                      forwardOriginalToken:
+                        description: If set to true, the original token will be kept
+                          for the upstream request.
+                        type: boolean
+                      fromHeaders:
+                        description: List of header locations from which JWT is expected.
+                        items:
+                          properties:
+                            name:
+                              description: The HTTP header name.
+                              type: string
+                            prefix:
+                              description: The prefix that should be stripped before
+                                decoding the token.
+                              type: string
+                          type: object
+                        type: array
+                      fromParams:
+                        description: List of query parameters from which JWT is expected.
+                        items:
+                          type: string
+                        type: array
+                      issuer:
+                        description: Identifies the issuer that issued the JWT.
+                        type: string
+                      jwks:
+                        description: JSON Web Key Set of public keys to validate signature
+                          of the JWT.
+                        type: string
+                      jwks_uri:
+                        type: string
+                      jwksUri:
+                        type: string
+                      outputClaimToHeaders:
+                        description: This field specifies a list of operations to
+                          copy the claim to HTTP headers on a successfully verified
+                          token.
+                        items:
+                          properties:
+                            claim:
+                              description: The name of the claim to be copied from.
+                              type: string
+                            header:
+                              description: The name of the header to be created.
+                              type: string
+                          type: object
+                        type: array
+                      outputPayloadToHeader:
+                        type: string
+                    type: object
+                  type: array
+                selector:
+                  description: Optional.
+                  properties:
+                    matchLabels:
+                      additionalProperties:
+                        type: string
+                      type: object
+                  type: object
+              type: object
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+          type: object
+      served: true
+      storage: false
+      subresources:
+        status: {}
     - name: v1beta1
       schema:
         openAPIV3Schema:
@@ -3797,6 +4069,20 @@ spec:
                         type: string
                       jwksUri:
                         type: string
+                      outputClaimToHeaders:
+                        description: This field specifies a list of operations to
+                          copy the claim to HTTP headers on a successfully verified
+                          token.
+                        items:
+                          properties:
+                            claim:
+                              description: The name of the claim to be copied from.
+                              type: string
+                            header:
+                              description: The name of the header to be created.
+                              type: string
+                          type: object
+                        type: array
                       outputPayloadToHeader:
                         type: string
                     type: object
@@ -3854,7 +4140,7 @@ spec:
           jsonPath: .spec.location
           name: Location
           type: string
-        - description: Service discovery mode for the hosts (NONE, STATIC, or DNS)
+        - description: Service resolution mode for the hosts (NONE, STATIC, or DNS)
           jsonPath: .spec.resolution
           name: Resolution
           type: string
@@ -3941,7 +4227,7 @@ spec:
                     type: object
                   type: array
                 resolution:
-                  description: Service discovery mode for the hosts.
+                  description: Service resolution mode for the hosts.
                   enum:
                     - NONE
                     - STATIC
@@ -3979,7 +4265,7 @@ spec:
           jsonPath: .spec.location
           name: Location
           type: string
-        - description: Service discovery mode for the hosts (NONE, STATIC, or DNS)
+        - description: Service resolution mode for the hosts (NONE, STATIC, or DNS)
           jsonPath: .spec.resolution
           name: Resolution
           type: string
@@ -4066,7 +4352,7 @@ spec:
                     type: object
                   type: array
                 resolution:
-                  description: Service discovery mode for the hosts.
+                  description: Service resolution mode for the hosts.
                   enum:
                     - NONE
                     - STATIC
@@ -4628,6 +4914,9 @@ spec:
                               type: string
                           type: object
                         type: array
+                      reportingInterval:
+                        description: Optional.
+                        type: string
                     type: object
                   type: array
                 selector:
@@ -6384,9 +6673,12 @@ spec:
                   description: Credentials to use for OCI image pulling.
                   type: string
                 match:
+                  description: Specifies the criteria to determine which traffic is
+                    passed to WasmPlugin.
                   items:
                     properties:
                       mode:
+                        description: Criteria for selecting traffic by their direction.
                         enum:
                           - UNDEFINED
                           - CLIENT
@@ -6394,6 +6686,8 @@ spec:
                           - CLIENT_AND_SERVER
                         type: string
                       ports:
+                        description: Criteria for selecting traffic by their destination
+                          port.
                         items:
                           properties:
                             number:
@@ -7393,6 +7687,18 @@ rules:
       - delete
     resources:
       - services
+  - apiGroups:
+      - ''
+    verbs:
+      - get
+      - watch
+      - list
+      - update
+      - patch
+      - create
+      - delete
+    resources:
+      - serviceaccounts
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -8135,6 +8441,76 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
+  name: stats-filter-1.17
+  namespace: istio-system
+  labels:
+    istio.io/rev: default
+spec:
+  priority: -1
+  configPatches:
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_OUTBOUND
+        proxy:
+          proxyVersion: ^1\.17.*
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.http_connection_manager
+              subFilter:
+                name: envoy.filters.http.router
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: istio.stats
+          typed_config:
+            '@type': type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/stats.PluginConfig
+            value: {}
+    - applyTo: HTTP_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        proxy:
+          proxyVersion: ^1\.17.*
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.http_connection_manager
+              subFilter:
+                name: envoy.filters.http.router
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: istio.stats
+          typed_config:
+            '@type': type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/stats.PluginConfig
+            value:
+              disable_host_header_fallback: true
+    - applyTo: HTTP_FILTER
+      match:
+        context: GATEWAY
+        proxy:
+          proxyVersion: ^1\.17.*
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.http_connection_manager
+              subFilter:
+                name: envoy.filters.http.router
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: istio.stats
+          typed_config:
+            '@type': type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/stats.PluginConfig
+            value:
+              disable_host_header_fallback: true
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
   name: tcp-stats-filter-1.13
   namespace: istio-system
   labels:
@@ -8524,6 +8900,68 @@ spec:
                     local:
                       inline_string: envoy.wasm.stats
 ---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: tcp-stats-filter-1.17
+  namespace: istio-system
+  labels:
+    istio.io/rev: default
+spec:
+  priority: -1
+  configPatches:
+    - applyTo: NETWORK_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        proxy:
+          proxyVersion: ^1\.17.*
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.tcp_proxy
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: istio.stats
+          typed_config:
+            '@type': type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/stats.PluginConfig
+            value: {}
+    - applyTo: NETWORK_FILTER
+      match:
+        context: SIDECAR_OUTBOUND
+        proxy:
+          proxyVersion: ^1\.17.*
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.tcp_proxy
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: istio.stats
+          typed_config:
+            '@type': type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/stats.PluginConfig
+            value: {}
+    - applyTo: NETWORK_FILTER
+      match:
+        context: GATEWAY
+        proxy:
+          proxyVersion: ^1\.17.*
+        listener:
+          filterChain:
+            filter:
+              name: envoy.filters.network.tcp_proxy
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: istio.stats
+          typed_config:
+            '@type': type.googleapis.com/udpa.type.v1.TypedStruct
+            type_url: type.googleapis.com/stats.PluginConfig
+            value: {}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8552,21 +8990,22 @@ metadata:
     release: istio
 data:
   values: "{\n  \"global\": {\n    \"autoscalingv2API\": true,\n    \"caAddress\"\
-    : \"\",\n    \"caName\": \"\",\n    \"configCluster\": false,\n    \"configValidation\"\
-    : true,\n    \"defaultNodeSelector\": {},\n    \"defaultPodDisruptionBudget\"\
-    : {\n      \"enabled\": true\n    },\n    \"defaultResources\": {\n      \"requests\"\
-    : {\n        \"cpu\": \"10m\"\n      }\n    },\n    \"enabled\": true,\n    \"\
-    externalIstiod\": false,\n    \"hub\": \"docker.io/istio\",\n    \"imagePullPolicy\"\
-    : \"\",\n    \"imagePullSecrets\": [],\n    \"istioNamespace\": \"istio-system\"\
-    ,\n    \"istiod\": {\n      \"enableAnalysis\": false\n    },\n    \"jwtPolicy\"\
-    : \"third-party-jwt\",\n    \"logAsJson\": false,\n    \"logging\": {\n      \"\
-    level\": \"default:info\"\n    },\n    \"meshID\": \"\",\n    \"meshNetworks\"\
-    : {},\n    \"mountMtlsCerts\": false,\n    \"multiCluster\": {\n      \"clusterName\"\
-    : \"\",\n      \"enabled\": false\n    },\n    \"namespace\": \"istio-system\"\
-    ,\n    \"network\": \"\",\n    \"omitSidecarInjectorConfigMap\": false,\n    \"\
-    oneNamespace\": false,\n    \"operatorManageWebhooks\": false,\n    \"pilotCertProvider\"\
-    : \"istiod\",\n    \"priorityClassName\": \"\",\n    \"proxy\": {\n      \"autoInject\"\
-    : \"enabled\",\n      \"clusterDomain\": \"cluster.local\",\n      \"componentLogLevel\"\
+    : \"\",\n    \"caName\": \"\",\n    \"certSigners\": [],\n    \"configCluster\"\
+    : false,\n    \"configValidation\": true,\n    \"defaultNodeSelector\": {},\n\
+    \    \"defaultPodDisruptionBudget\": {\n      \"enabled\": true\n    },\n    \"\
+    defaultResources\": {\n      \"requests\": {\n        \"cpu\": \"10m\"\n     \
+    \ }\n    },\n    \"enabled\": true,\n    \"externalIstiod\": false,\n    \"hub\"\
+    : \"docker.io/istio\",\n    \"imagePullPolicy\": \"\",\n    \"imagePullSecrets\"\
+    : [],\n    \"istioNamespace\": \"istio-system\",\n    \"istiod\": {\n      \"\
+    enableAnalysis\": false\n    },\n    \"jwtPolicy\": \"third-party-jwt\",\n   \
+    \ \"logAsJson\": false,\n    \"logging\": {\n      \"level\": \"default:info\"\
+    \n    },\n    \"meshID\": \"\",\n    \"meshNetworks\": {},\n    \"mountMtlsCerts\"\
+    : false,\n    \"multiCluster\": {\n      \"clusterName\": \"\",\n      \"enabled\"\
+    : false\n    },\n    \"namespace\": \"istio-system\",\n    \"network\": \"\",\n\
+    \    \"omitSidecarInjectorConfigMap\": false,\n    \"oneNamespace\": false,\n\
+    \    \"operatorManageWebhooks\": false,\n    \"pilotCertProvider\": \"istiod\"\
+    ,\n    \"priorityClassName\": \"\",\n    \"proxy\": {\n      \"autoInject\": \"\
+    enabled\",\n      \"clusterDomain\": \"cluster.local\",\n      \"componentLogLevel\"\
     : \"misc:error\",\n      \"enableCoreDump\": false,\n      \"excludeIPRanges\"\
     : \"\",\n      \"excludeInboundPorts\": \"\",\n      \"excludeOutboundPorts\"\
     : \"\",\n      \"holdApplicationUntilProxyStarts\": false,\n      \"image\": \"\
@@ -8583,7 +9022,7 @@ data:
     \ },\n        \"requests\": {\n          \"cpu\": \"10m\",\n          \"memory\"\
     : \"10Mi\"\n        }\n      }\n    },\n    \"remotePilotAddress\": \"\",\n  \
     \  \"sds\": {\n      \"token\": {\n        \"aud\": \"istio-ca\"\n      }\n  \
-    \  },\n    \"sts\": {\n      \"servicePort\": 0\n    },\n    \"tag\": \"1.16.0\"\
+    \  },\n    \"sts\": {\n      \"servicePort\": 0\n    },\n    \"tag\": \"1.17.1\"\
     ,\n    \"tracer\": {\n      \"datadog\": {\n        \"address\": \"$(HOST_IP):8126\"\
     \n      },\n      \"lightstep\": {\n        \"accessToken\": \"\",\n        \"\
     address\": \"\"\n      },\n      \"stackdriver\": {\n        \"debug\": false,\n\
@@ -8775,17 +9214,18 @@ data:
     \            {{- end}}\n            ]\n        - name: ISTIO_META_APP_CONTAINERS\n\
     \          value: \"{{ $containers | join \",\" }}\"\n        - name: ISTIO_META_CLUSTER_ID\n\
     \          value: \"{{ valueOrDefault .Values.global.multiCluster.clusterName\
-    \ `Kubernetes` }}\"\n        - name: ISTIO_META_INTERCEPTION_MODE\n          value:\
-    \ \"{{ or (index .ObjectMeta.Annotations `sidecar.istio.io/interceptionMode`)\
-    \ .ProxyConfig.InterceptionMode.String }}\"\n        {{- if .Values.global.network\
-    \ }}\n        - name: ISTIO_META_NETWORK\n          value: \"{{ .Values.global.network\
-    \ }}\"\n        {{- end }}\n        {{- if .DeploymentMeta.Name }}\n        -\
-    \ name: ISTIO_META_WORKLOAD_NAME\n          value: \"{{ .DeploymentMeta.Name }}\"\
-    \n        {{ end }}\n        {{- if and .TypeMeta.APIVersion .DeploymentMeta.Name\
-    \ }}\n        - name: ISTIO_META_OWNER\n          value: kubernetes://apis/{{\
-    \ .TypeMeta.APIVersion }}/namespaces/{{ valueOrDefault .DeploymentMeta.Namespace\
-    \ `default` }}/{{ toLower .TypeMeta.Kind}}s/{{ .DeploymentMeta.Name }}\n     \
-    \   {{- end}}\n        {{- if (isset .ObjectMeta.Annotations `sidecar.istio.io/bootstrapOverride`)\
+    \ `Kubernetes` }}\"\n        - name: ISTIO_META_NODE_NAME\n          valueFrom:\n\
+    \            fieldRef:\n              fieldPath: spec.nodeName\n        - name:\
+    \ ISTIO_META_INTERCEPTION_MODE\n          value: \"{{ or (index .ObjectMeta.Annotations\
+    \ `sidecar.istio.io/interceptionMode`) .ProxyConfig.InterceptionMode.String }}\"\
+    \n        {{- if .Values.global.network }}\n        - name: ISTIO_META_NETWORK\n\
+    \          value: \"{{ .Values.global.network }}\"\n        {{- end }}\n     \
+    \   {{- if .DeploymentMeta.Name }}\n        - name: ISTIO_META_WORKLOAD_NAME\n\
+    \          value: \"{{ .DeploymentMeta.Name }}\"\n        {{ end }}\n        {{-\
+    \ if and .TypeMeta.APIVersion .DeploymentMeta.Name }}\n        - name: ISTIO_META_OWNER\n\
+    \          value: kubernetes://apis/{{ .TypeMeta.APIVersion }}/namespaces/{{ valueOrDefault\
+    \ .DeploymentMeta.Namespace `default` }}/{{ toLower .TypeMeta.Kind}}s/{{ .DeploymentMeta.Name\
+    \ }}\n        {{- end}}\n        {{- if (isset .ObjectMeta.Annotations `sidecar.istio.io/bootstrapOverride`)\
     \ }}\n        - name: ISTIO_BOOTSTRAP_OVERRIDE\n          value: \"/etc/istio/custom-bootstrap/custom_bootstrap.json\"\
     \n        {{- end }}\n        {{- if .Values.global.meshID }}\n        - name:\
     \ ISTIO_META_MESH_ID\n          value: \"{{ .Values.global.meshID }}\"\n     \
@@ -8843,8 +9283,10 @@ data:
     \          mountPath: /var/run/secrets/workload-spiffe-credentials\n        {{-\
     \ end }}\n        {{- if eq .Values.global.pilotCertProvider \"istiod\" }}\n \
     \       - mountPath: /var/run/secrets/istio\n          name: istiod-ca-cert\n\
-    \        {{- end }}\n        - mountPath: /var/lib/istio/data\n          name:\
-    \ istio-data\n        {{ if (isset .ObjectMeta.Annotations `sidecar.istio.io/bootstrapOverride`)\
+    \        {{- end }}\n        {{- if eq .Values.global.pilotCertProvider \"kubernetes\"\
+    \ }}\n        - mountPath: /var/run/secrets/istio/kubernetes\n          name:\
+    \ kube-ca-cert\n        {{- end }}\n        - mountPath: /var/lib/istio/data\n\
+    \          name: istio-data\n        {{ if (isset .ObjectMeta.Annotations `sidecar.istio.io/bootstrapOverride`)\
     \ }}\n        - mountPath: /etc/istio/custom-bootstrap\n          name: custom-bootstrap-volume\n\
     \        {{- end }}\n        # SDS channel between istioagent and Envoy\n    \
     \    - mountPath: /etc/istio/proxy\n          name: istio-envoy\n        {{- if\
@@ -8881,8 +9323,10 @@ data:
     \           audience: {{ .Values.global.sds.token.aud }}\n      {{- end }}\n \
     \     {{- if eq .Values.global.pilotCertProvider \"istiod\" }}\n      - name:\
     \ istiod-ca-cert\n        configMap:\n          name: istio-ca-root-cert\n   \
-    \   {{- end }}\n      {{- if .Values.global.mountMtlsCerts }}\n      # Use the\
-    \ key and cert mounted to /etc/certs/ for the in-cluster mTLS communications.\n\
+    \   {{- end }}\n      {{- if eq .Values.global.pilotCertProvider \"kubernetes\"\
+    \ }}\n      - name: kube-ca-cert\n        configMap:\n          name: kube-root-ca.crt\n\
+    \      {{- end }}\n      {{- if .Values.global.mountMtlsCerts }}\n      # Use\
+    \ the key and cert mounted to /etc/certs/ for the in-cluster mTLS communications.\n\
     \      - name: istio-certs\n        secret:\n          optional: true\n      \
     \    {{ if eq .Spec.ServiceAccountName \"\" }}\n          secretName: istio.default\n\
     \          {{ else -}}\n          secretName: {{  printf \"istio.%s\" .Spec.ServiceAccountName\
@@ -8949,26 +9393,28 @@ data:
     \            {{- end}}\n            ]\n        - name: ISTIO_META_APP_CONTAINERS\n\
     \          value: \"{{ $containers | join \",\" }}\"\n        - name: ISTIO_META_CLUSTER_ID\n\
     \          value: \"{{ valueOrDefault .Values.global.multiCluster.clusterName\
-    \ `Kubernetes` }}\"\n        - name: ISTIO_META_INTERCEPTION_MODE\n          value:\
-    \ \"{{ .ProxyConfig.InterceptionMode.String }}\"\n        {{- if .Values.global.network\
-    \ }}\n        - name: ISTIO_META_NETWORK\n          value: \"{{ .Values.global.network\
-    \ }}\"\n        {{- end }}\n        {{- if .DeploymentMeta.Name }}\n        -\
-    \ name: ISTIO_META_WORKLOAD_NAME\n          value: \"{{ .DeploymentMeta.Name }}\"\
-    \n        {{ end }}\n        {{- if and .TypeMeta.APIVersion .DeploymentMeta.Name\
-    \ }}\n        - name: ISTIO_META_OWNER\n          value: kubernetes://apis/{{\
-    \ .TypeMeta.APIVersion }}/namespaces/{{ valueOrDefault .DeploymentMeta.Namespace\
-    \ `default` }}/{{ toLower .TypeMeta.Kind}}s/{{ .DeploymentMeta.Name }}\n     \
-    \   {{- end}}\n        {{- if .Values.global.meshID }}\n        - name: ISTIO_META_MESH_ID\n\
-    \          value: \"{{ .Values.global.meshID }}\"\n        {{- else if (valueOrDefault\
-    \ .MeshConfig.TrustDomain .Values.global.trustDomain) }}\n        - name: ISTIO_META_MESH_ID\n\
-    \          value: \"{{ (valueOrDefault .MeshConfig.TrustDomain .Values.global.trustDomain)\
-    \ }}\"\n        {{- end }}\n        {{- with (valueOrDefault .MeshConfig.TrustDomain\
-    \ .Values.global.trustDomain)  }}\n        - name: TRUST_DOMAIN\n          value:\
-    \ \"{{ . }}\"\n        {{- end }}\n        {{- range $key, $value := .ProxyConfig.ProxyMetadata\
-    \ }}\n        - name: {{ $key }}\n          value: \"{{ $value }}\"\n        {{-\
-    \ end }}\n        {{with .Values.global.imagePullPolicy }}imagePullPolicy: \"\
-    {{.}}\"{{end}}\n        readinessProbe:\n          httpGet:\n            path:\
-    \ /healthz/ready\n            port: 15021\n          initialDelaySeconds: {{.Values.global.proxy.readinessInitialDelaySeconds\
+    \ `Kubernetes` }}\"\n        - name: ISTIO_META_NODE_NAME\n          valueFrom:\n\
+    \            fieldRef:\n              fieldPath: spec.nodeName\n        - name:\
+    \ ISTIO_META_INTERCEPTION_MODE\n          value: \"{{ .ProxyConfig.InterceptionMode.String\
+    \ }}\"\n        {{- if .Values.global.network }}\n        - name: ISTIO_META_NETWORK\n\
+    \          value: \"{{ .Values.global.network }}\"\n        {{- end }}\n     \
+    \   {{- if .DeploymentMeta.Name }}\n        - name: ISTIO_META_WORKLOAD_NAME\n\
+    \          value: \"{{ .DeploymentMeta.Name }}\"\n        {{ end }}\n        {{-\
+    \ if and .TypeMeta.APIVersion .DeploymentMeta.Name }}\n        - name: ISTIO_META_OWNER\n\
+    \          value: kubernetes://apis/{{ .TypeMeta.APIVersion }}/namespaces/{{ valueOrDefault\
+    \ .DeploymentMeta.Namespace `default` }}/{{ toLower .TypeMeta.Kind}}s/{{ .DeploymentMeta.Name\
+    \ }}\n        {{- end}}\n        {{- if .Values.global.meshID }}\n        - name:\
+    \ ISTIO_META_MESH_ID\n          value: \"{{ .Values.global.meshID }}\"\n     \
+    \   {{- else if (valueOrDefault .MeshConfig.TrustDomain .Values.global.trustDomain)\
+    \ }}\n        - name: ISTIO_META_MESH_ID\n          value: \"{{ (valueOrDefault\
+    \ .MeshConfig.TrustDomain .Values.global.trustDomain) }}\"\n        {{- end }}\n\
+    \        {{- with (valueOrDefault .MeshConfig.TrustDomain .Values.global.trustDomain)\
+    \  }}\n        - name: TRUST_DOMAIN\n          value: \"{{ . }}\"\n        {{-\
+    \ end }}\n        {{- range $key, $value := .ProxyConfig.ProxyMetadata }}\n  \
+    \      - name: {{ $key }}\n          value: \"{{ $value }}\"\n        {{- end\
+    \ }}\n        {{with .Values.global.imagePullPolicy }}imagePullPolicy: \"{{.}}\"\
+    {{end}}\n        readinessProbe:\n          httpGet:\n            path: /healthz/ready\n\
+    \            port: 15021\n          initialDelaySeconds: {{.Values.global.proxy.readinessInitialDelaySeconds\
     \ }}\n          periodSeconds: {{ .Values.global.proxy.readinessPeriodSeconds\
     \ }}\n          timeoutSeconds: 3\n          failureThreshold: {{ .Values.global.proxy.readinessFailureThreshold\
     \ }}\n        volumeMounts:\n        - name: workload-socket\n          mountPath:\
@@ -9122,24 +9568,25 @@ data:
     \            {{- end}}\n            ]\n        - name: ISTIO_META_APP_CONTAINERS\n\
     \          value: \"{{ $containers | join \",\" }}\"\n        - name: ISTIO_META_CLUSTER_ID\n\
     \          value: \"{{ valueOrDefault .Values.global.multiCluster.clusterName\
-    \ `Kubernetes` }}\"\n        {{- if .Values.global.network }}\n        - name:\
-    \ ISTIO_META_NETWORK\n          value: \"{{ .Values.global.network }}\"\n    \
-    \    {{- end }}\n        {{- if .DeploymentMeta.Name }}\n        - name: ISTIO_META_WORKLOAD_NAME\n\
-    \          value: \"{{ .DeploymentMeta.Name }}\"\n        {{ end }}\n        {{-\
-    \ if and .TypeMeta.APIVersion .DeploymentMeta.Name }}\n        - name: ISTIO_META_OWNER\n\
-    \          value: kubernetes://apis/{{ .TypeMeta.APIVersion }}/namespaces/{{ valueOrDefault\
-    \ .DeploymentMeta.Namespace `default` }}/{{ toLower .TypeMeta.Kind}}s/{{ .DeploymentMeta.Name\
-    \ }}\n        {{- end}}\n        {{- if .Values.global.meshID }}\n        - name:\
-    \ ISTIO_META_MESH_ID\n          value: \"{{ .Values.global.meshID }}\"\n     \
-    \   {{- else if (valueOrDefault .MeshConfig.TrustDomain .Values.global.trustDomain)\
-    \ }}\n        - name: ISTIO_META_MESH_ID\n          value: \"{{ (valueOrDefault\
-    \ .MeshConfig.TrustDomain .Values.global.trustDomain) }}\"\n        {{- end }}\n\
-    \        {{- with (valueOrDefault .MeshConfig.TrustDomain .Values.global.trustDomain)\
-    \  }}\n        - name: TRUST_DOMAIN\n          value: \"{{ . }}\"\n        {{-\
-    \ end }}\n        {{- range $key, $value := .ProxyConfig.ProxyMetadata }}\n  \
-    \      - name: {{ $key }}\n          value: \"{{ $value }}\"\n        {{- end\
-    \ }}\n        # grpc uses xds:/// to resolve – no need to resolve VIP\n      \
-    \  - name: ISTIO_META_DNS_CAPTURE\n          value: \"false\"\n        - name:\
+    \ `Kubernetes` }}\"\n        - name: ISTIO_META_NODE_NAME\n          valueFrom:\n\
+    \            fieldRef:\n              fieldPath: spec.nodeName\n        {{- if\
+    \ .Values.global.network }}\n        - name: ISTIO_META_NETWORK\n          value:\
+    \ \"{{ .Values.global.network }}\"\n        {{- end }}\n        {{- if .DeploymentMeta.Name\
+    \ }}\n        - name: ISTIO_META_WORKLOAD_NAME\n          value: \"{{ .DeploymentMeta.Name\
+    \ }}\"\n        {{ end }}\n        {{- if and .TypeMeta.APIVersion .DeploymentMeta.Name\
+    \ }}\n        - name: ISTIO_META_OWNER\n          value: kubernetes://apis/{{\
+    \ .TypeMeta.APIVersion }}/namespaces/{{ valueOrDefault .DeploymentMeta.Namespace\
+    \ `default` }}/{{ toLower .TypeMeta.Kind}}s/{{ .DeploymentMeta.Name }}\n     \
+    \   {{- end}}\n        {{- if .Values.global.meshID }}\n        - name: ISTIO_META_MESH_ID\n\
+    \          value: \"{{ .Values.global.meshID }}\"\n        {{- else if (valueOrDefault\
+    \ .MeshConfig.TrustDomain .Values.global.trustDomain) }}\n        - name: ISTIO_META_MESH_ID\n\
+    \          value: \"{{ (valueOrDefault .MeshConfig.TrustDomain .Values.global.trustDomain)\
+    \ }}\"\n        {{- end }}\n        {{- with (valueOrDefault .MeshConfig.TrustDomain\
+    \ .Values.global.trustDomain)  }}\n        - name: TRUST_DOMAIN\n          value:\
+    \ \"{{ . }}\"\n        {{- end }}\n        {{- range $key, $value := .ProxyConfig.ProxyMetadata\
+    \ }}\n        - name: {{ $key }}\n          value: \"{{ $value }}\"\n        {{-\
+    \ end }}\n        # grpc uses xds:/// to resolve – no need to resolve VIP\n  \
+    \      - name: ISTIO_META_DNS_CAPTURE\n          value: \"false\"\n        - name:\
     \ DISABLE_ENVOY\n          value: \"true\"\n        {{with .Values.global.imagePullPolicy\
     \ }}imagePullPolicy: \"{{.}}\"{{end}}\n        {{ if ne (annotation .ObjectMeta\
     \ `status.sidecar.istio.io/port` .Values.global.proxy.statusPort) `0` }}\n   \
@@ -9417,7 +9864,7 @@ spec:
       serviceAccountName: istio-ingressgateway-service-account
       containers:
         - name: istio-proxy
-          image: docker.io/istio/proxyv2:1.16.0
+          image: docker.io/istio/proxyv2:1.17.1
           ports:
             - containerPort: 15021
               protocol: TCP
@@ -9508,6 +9955,10 @@ spec:
               value: 'true'
             - name: ISTIO_META_CLUSTER_ID
               value: Kubernetes
+            - name: ISTIO_META_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
           volumeMounts:
             - name: workload-socket
               mountPath: /var/run/secrets/workload-spiffe-uds
@@ -9620,7 +10071,7 @@ spec:
         fsGroup: 1337
       containers:
         - name: discovery
-          image: docker.io/istio/pilot:1.16.0
+          image: docker.io/istio/pilot:1.17.1
           args:
             - discovery
             - --monitoringAddr=:15014

@@ -13,7 +13,7 @@ demo: secrets
 
 # This regenerates the istio manifests while using yq to remove the CRD for the
 # operator so it doesn't clash with the istio operator which also includes the
-# CRD
+# CRD.  Note: the yq used here is the python (not go) version
 .PHONY: update-istio
 update-istio:
 		istioctl manifest generate --cluster-specific --dry-run | yq -y 'select(.metadata.name != "istiooperators.install.istio.io" or .kind != "CustomResourceDefinition") | select (.!=null)' > ingress/istio.yaml
