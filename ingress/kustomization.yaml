@@ -9,7 +9,7 @@ resources:
 - kiali.yaml
 - https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/prometheus.yaml
 - https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/jaeger.yaml
-patchesJSON6902:
+patches:
 - target:
     version: v1
     kind: Service
