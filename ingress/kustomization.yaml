@@ -6,9 +6,9 @@ resources:
 - namespace.yaml
 - gateway.yaml
 - peerauthentication.yaml
-- kiali.yaml
-- https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/prometheus.yaml
-- https://raw.githubusercontent.com/istio/istio/release-1.15/samples/addons/jaeger.yaml
+- https://raw.githubusercontent.com/istio/istio/release-1.20/samples/addons/kiali.yaml
+- https://raw.githubusercontent.com/istio/istio/release-1.20/samples/addons/prometheus.yaml
+- https://raw.githubusercontent.com/istio/istio/release-1.20/samples/addons/jaeger.yaml
 patches:
 - target:
     version: v1

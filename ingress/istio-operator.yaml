@@ -153,7 +153,7 @@ spec:
       serviceAccountName: istio-operator
       containers:
         - name: istio-operator
-          image: docker.io/istio/operator:1.17.1
+          image: docker.io/istio/operator:1.20.0
           command:
           - operator
           - server
@@ -166,8 +166,6 @@ spec:
               - ALL
             privileged: false
             readOnlyRootFilesystem: true
-            runAsGroup: 1337
-            runAsUser: 1337
             runAsNonRoot: true
           resources:
             limits:
