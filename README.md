@@ -25,7 +25,7 @@ What's missing to help departments adapt to this "major shift" are working examp
 
 A distributed system is made of many small (micro even!) parts (services) that collaborate to deliver some funtionality, deployed across a series of machines. The most basic verion of this architecture comes from splitting a classic MVC-style monolith in two. The result: An API developed together with an application that consumes it. [Just like Treasury Board requires](https://www.canada.ca/en/government/system/digital-government/modern-emerging-technologies/government-canada-standards-apis.html#:~:text=The%20best%20way%20to%20validate%20your%20API%20design%20is%20to%20consume%20it%20with%20a%20production%20application%20within%20your%20organization.).
 
-The basic idea behind this demo is to show and example of this way of building and deploying applications allows for more granular security decisions and higher levels of observability, as can been seen when we visualize traffic flowing through these services with [Kiali](https://kiali.io/).
+The basic idea behind this demo is to show an example of this way of building and deploying applications and demonstrate how it allows for better security boundaries, and more granular security decisions. It also allows for higher levels of observability, as can been seen when we visualize traffic flowing through these services with [Kiali](https://kiali.io/).
 
 ![microservices-kiali](https://user-images.githubusercontent.com/109692/191849626-bd14c426-d536-4fbc-8bb0-fad20d5f2d5e.gif)
 
