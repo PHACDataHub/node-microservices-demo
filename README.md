@@ -14,15 +14,18 @@ This mandatory policy is aggressively modern and directs departments to
 * "[expose services, including existing ones, through APIs](https://www.canada.ca/en/government/system/digital-government/policies-standards/government-canada-enterprise-architecture-framework.html#:~:text=expose%20services%2C%20including%20existing%20ones%2C%20through%20APIs)"
 * "[ensure automated testing occurs](https://www.canada.ca/en/government/system/digital-government/policies-standards/government-canada-enterprise-architecture-framework.html#:~:text=ensure%20automated%20testing%20occurs)"
 * "[design for cloud mobility](https://www.canada.ca/en/government/system/digital-government/policies-standards/government-canada-enterprise-architecture-framework.html#:~:text=design%20for%20cloud%20mobility)"
-* [validate APIs by consuming what you build](https://www.canada.ca/en/government/system/digital-government/modern-emerging-technologies/government-canada-standards-apis.html#:~:text=Consume%20what%20you%20build)" 
+* [validate APIs by consuming what you build](https://www.canada.ca/en/government/system/digital-government/modern-emerging-technologies/government-canada-standards-apis.html#:~:text=Consume%20what%20you%20build)
 
-The shift to highly available and [evolvable](https://www.amazon.ca/Building-Evolutionary-Architectures-Support-Constant/dp/1491986360/ref=sr_1_1) [distributed systems](https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems-3b91562c9b3c) is strategically important to support modern service delivery, but it's easy to overlook that building and supporting such systems is very different from what the government is used to. Distributed systems are [complex](https://how.complexsystems.fail) and [hard](https://www.youtube.com/watch?v=w9GP7MNbaRc).
+The shift to highly available and [evolvable](https://www.amazon.ca/Building-Evolutionary-Architectures-Support-Constant/dp/1491986360/ref=sr_1_1) [distributed systems](https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems-3b91562c9b3c) is strategically important to support modern service delivery, but it's easy to overlook that building and supporting such systems is very different from the [3-tier architecture]([url](https://www.gartner.com/en/documents/3352423)) that most departments have standardized on. 
+Distributed systems are [complex](https://how.complexsystems.fail) and [hard](https://www.youtube.com/watch?v=w9GP7MNbaRc).
 
 What's missing to help departments adapt to this "major shift" are working examples of how to build this type of architecture. That is the aim of this project.
 
 ## This demo
 
-A distributed system is made of many small (micro even!) parts (services) that collaborate to deliver some funtionality, deployed across a series of machines. The basic idea behind this demo is to show how this way of building and deploying applications allows for more granular security decisions and higher levels of observability, as can been seen when we visualize traffic flowing through these services with [Kiali](https://kiali.io/).
+A distributed system is made of many small (micro even!) parts (services) that collaborate to deliver some funtionality, deployed across a series of machines. The most basic verion of this architecture comes from splitting a classic MVC-style monolith in two. The result: An API developed together with an application that consumes it. [Just like Treasury Board requires](https://www.canada.ca/en/government/system/digital-government/modern-emerging-technologies/government-canada-standards-apis.html#:~:text=The%20best%20way%20to%20validate%20your%20API%20design%20is%20to%20consume%20it%20with%20a%20production%20application%20within%20your%20organization.).
+
+The basic idea behind this demo is to show and example of this way of building and deploying applications allows for more granular security decisions and higher levels of observability, as can been seen when we visualize traffic flowing through these services with [Kiali](https://kiali.io/).
 
 ![microservices-kiali](https://user-images.githubusercontent.com/109692/191849626-bd14c426-d536-4fbc-8bb0-fad20d5f2d5e.gif)
 
