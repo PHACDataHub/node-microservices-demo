@@ -62,7 +62,9 @@ See the [UI documentation](ui/README.md) for more details.
 
 ## Running it
 
-Distributed architectures require an [orchestrator](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/scalable-available-multi-container-microservice-applications), and Kubernetes is a vendor neutral open source stadard. You can run a local version of it using [Minikube](https://minikube.sigs.k8s.io/docs/). Minikube requires a lot of resources... so throw everything you can at it.
+Distributed architectures require an [orchestrator](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/scalable-available-multi-container-microservice-applications), and Kubernetes is a vendor neutral open source orchestrator available in many form factors [from many vendors](https://www.cncf.io/training/certification/software-conformance/#logos) with [security sufficient for the US Air Force](https://thenewstack.io/how-the-u-s-air-force-deployed-kubernetes-and-istio-on-an-f-16-in-45-days/).
+
+You can run a local version of it using [Minikube](https://minikube.sigs.k8s.io/docs/). Minikube requires a lot of resources... so throw everything you can at it.
 
 For reference, this is what was used to develop this.
 ```bash
