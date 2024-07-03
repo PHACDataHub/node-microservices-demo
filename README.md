@@ -17,7 +17,7 @@ This mandatory policy is aggressively modern and directs departments to
 * [validate APIs by consuming what you build](https://www.canada.ca/en/government/system/digital-government/modern-emerging-technologies/government-canada-standards-apis.html#:~:text=Consume%20what%20you%20build)
 
 The shift to highly available and [evolvable](https://www.amazon.ca/Building-Evolutionary-Architectures-Support-Constant/dp/1491986360/ref=sr_1_1) [distributed systems](https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems-3b91562c9b3c) is strategically important to support modern service delivery, but it's easy to overlook that building and supporting such systems is very different from the [3-tier architecture](https://www.gartner.com/en/documents/3352423) that most departments have standardized on. 
-Distributed systems are [complex](https://how.complexsystems.fail) and [hard](https://www.youtube.com/watch?v=w9GP7MNbaRc).
+Distributed systems are [complex](https://how.complexsystems.fail) and [hard](https://www.youtube.com/watch?v=w9GP7MNbaRc) and building them requires different [structures](https://teamtopologies.com/key-concepts), tools and [patterns](https://microservices.io/).
 
 What's missing to help departments adapt to this "major shift" are working examples of how to build this type of architecture. That is the aim of this project.
 
