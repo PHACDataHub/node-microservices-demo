@@ -43,6 +43,8 @@ The code and readme files make special note of [the security properties that eme
 
 Since [APIs are mandatory](https://www.canada.ca/en/government/system/digital-government/policies-standards/government-canada-enterprise-architecture-framework.html#toc04:~:text=expose%20services%2C%20including%20existing%20ones%2C%20through%20APIs), the API forms a core part of this service. Living in the API folder, this is a [GraphQL](https://graphql.org) API that reads from/writes to tables in the database, and produces only JSON as an output. It's narrow scope allows for tightly scoped database permissions, and makes security profiling of "normal" behaviour tractable.
 
+While The TBS Standard on APIs says that APIs should use REST "[by default](https://www.canada.ca/en/government/system/digital-government/modern-emerging-technologies/government-canada-standards-apis.html#:~:text=APIs%20must%20follow%20the%20RESTful%20model%20by%20default.)", this demo extercises the latitude to go beyond the default (it's been confirmed with TBS this is allowed) and use GraphQL because [it allows for composition](https://www.apollographql.com/docs/federation/federated-types/composition/). Services built with composition in mind turn themselves into building blocks that can be combined in various ways to allow the organization as a whole to quickly adapt to shifting demands (hence calls for a "[composable enterprise](https://www.gartner.com/en/doc/465932-future-of-applications-delivering-the-composable-enterprise)").
+
 See the [API documentation](api/README.md) for more details.
 
 ## The Migrations service
@@ -56,7 +58,8 @@ See the [Migrations documentation](migrations/README.md) for more details.
 
 ## The UI service
 
-Found in the ui folder, this service queries the API and is focused on [safely encoding](https://youtu.be/NcAYsC_TKCA?t=642) the data received into accessible HTML using [React](https://reactjs.org/).
+Found in the ui folder, this service queries the API and is focused on [safely encoding](https://youtu.be/NcAYsC_TKCA?t=642) the data received into accessible HTML using [React](https://react.dev/). This approach means that teams with varying skill levels can reliably produce UI that is free from Cross Site-Scripting vulnerabilities (aka XSS). Using React also makes it possible to leverage accessible-by-default components created by others (such as Microsoft's [Fluent UI](https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-accessible-by-default) components, Adobe's [React Aria](https://react-spectrum.adobe.com/react-aria/index.html), or community-led projects like [Radix-UI](https://www.radix-ui.com/)).
+When devs are building with components that are both secure and accessible by default, organizations have the option of implementing lighter, faster process without worry that these requirements will not be met.     
 
 See the [UI documentation](ui/README.md) for more details.
 
