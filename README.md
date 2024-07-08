@@ -47,6 +47,13 @@ While The TBS Standard on APIs says that APIs should use REST "[by default](http
 
 See the [API documentation](api/README.md) for more details.
 
+## The UI service
+
+Found in the ui folder, this service queries the API and is focused on [safely encoding](https://youtu.be/NcAYsC_TKCA?t=642) the data received into accessible HTML using [React](https://react.dev/). This approach means that teams with varying skill levels can reliably produce UI that is free from Cross Site-Scripting vulnerabilities (aka XSS). Using React also makes it possible to leverage accessible-by-default components created by others (such as Microsoft's [Fluent UI](https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-accessible-by-default) components, Adobe's [React Aria](https://react-spectrum.adobe.com/react-aria/index.html), or community-led projects like [Radix-UI](https://www.radix-ui.com/)).
+When devs are building with components that are both secure and accessible by default, organizations have the option of implementing lighter, faster process without worry that these requirements will not be met.
+
+See the [UI documentation](ui/README.md) for more details.
+
 ## The Migrations service
 
 This lives in the migrations folder and exists to move the database schema from one known state to the next. The requirement to "[support zero-downtime deployments](https://www.canada.ca/en/government/system/digital-government/policies-standards/government-canada-enterprise-architecture-framework.html#:~:text=support%20zero%E2%80%91downtime%20deployments)" means teams will need to look carefully at how to do this with their choosen database and web framework (and possibly choose ones that make this easy to do).
@@ -55,13 +62,6 @@ The powerful permissions needed to alter a database schema (ie create/drop table
 This design leverages the plumbing provided by modern container orchestrators like [ECS](https://twitter.com/nathankpeck/status/1104069162949849092) or [Kubernetes](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/#understanding-init-containers) to achieve "least privilege".
 
 See the [Migrations documentation](migrations/README.md) for more details.
-
-## The UI service
-
-Found in the ui folder, this service queries the API and is focused on [safely encoding](https://youtu.be/NcAYsC_TKCA?t=642) the data received into accessible HTML using [React](https://react.dev/). This approach means that teams with varying skill levels can reliably produce UI that is free from Cross Site-Scripting vulnerabilities (aka XSS). Using React also makes it possible to leverage accessible-by-default components created by others (such as Microsoft's [Fluent UI](https://learn.microsoft.com/en-us/shows/fluent-ui-insights/fluent-ui-insights-accessible-by-default) components, Adobe's [React Aria](https://react-spectrum.adobe.com/react-aria/index.html), or community-led projects like [Radix-UI](https://www.radix-ui.com/)).
-When devs are building with components that are both secure and accessible by default, organizations have the option of implementing lighter, faster process without worry that these requirements will not be met.     
-
-See the [UI documentation](ui/README.md) for more details.
 
 ## Running it
 
